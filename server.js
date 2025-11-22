@@ -1,4 +1,4 @@
-require('dotenv').config({path: './data.env'});
+require('dotenv').config({ path: './data.env' });
 const express = require('express')
 const cors = require('cors')
 const fs = require('fs');
@@ -15,7 +15,9 @@ app.use(express.json());
 // })
 
 const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
         user: process.env.CORREO,
         pass: process.env.PASS
@@ -49,7 +51,7 @@ app.post('/api/contact', (req, res) => {
                     subject: Nuevo mensaje de ${req.body.firstName} ${req.body.lastName},
                     Mensaje: ${req.body.message}
                 `
-                
+
             });
             return res.send('Mensaje guardado correctamente');
         } catch (emailErr) {
